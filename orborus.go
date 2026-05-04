@@ -2170,16 +2170,16 @@ func getOrborusStats(ctx context.Context, sensorMode shuffle.SensorMode) shuffle
 		newStats.SensorDetails.ElevatedAccess = shuffle.IsElevated()
 		newStats.SensorDetails.Serial = shuffle.GetProfiler()
 
-		if sensorMode.SoftwareListEnabled {
+		if sensorMode.SoftwareListEnabled == "true" {
 			// Check cache first before running the command
 			newStats.SensorDetails.InstalledSoftware = shuffle.ListInstalledSoftware()
 		}
 
-		if sensorMode.HdEncryptedCheck {
+		if sensorMode.HdEncryptedCheck == "true" {
 			newStats.SensorDetails.HdEncrypted = fmt.Sprintf("%t", shuffle.IsDiskEncrypted())
 		}
 
-		if sensorMode.ScreenlockCheck {  
+		if sensorMode.ScreenlockCheck == "true" {  
 			newStats.SensorDetails.AutomaticScreenlockEnabled = fmt.Sprintf("%t", shuffle.IsAutomaticScreenlockEnabled())
 		}
 
@@ -2512,9 +2512,9 @@ func main() {
 	sensorMode := shuffle.SensorMode{
 		Enabled: os.Getenv("SHUFFLE_AGENT_SENSOR_MODE") == "true",
 
-		SoftwareListEnabled: os.Getenv("SHUFFLE_SOFTWARE_LIST_ENABLED") == "true",
-		HdEncryptedCheck: os.Getenv("SHUFFLE_HD_ENCRYPTED_CHECK") == "true",
-		ScreenlockCheck: os.Getenv("SHUFFLE_SCREENLOCK_CHECK") == "true",
+		SoftwareListEnabled: os.Getenv("SHUFFLE_SOFTWARE_LIST_ENABLED"),
+		HdEncryptedCheck: os.Getenv("SHUFFLE_HD_ENCRYPTED_CHECK"),
+		ScreenlockCheck: os.Getenv("SHUFFLE_SCREENLOCK_CHECK"),
 
 		LogForwarding: os.Getenv("SHUFFLE_LOG_FORWARDING"),
 		ResponseActions: os.Getenv("SHUFFLE_RESPONSE_ACTIONS"), 
