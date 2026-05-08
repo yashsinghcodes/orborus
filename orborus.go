@@ -2177,6 +2177,13 @@ func getOrborusStats(ctx context.Context, sensorMode shuffle.SensorMode) shuffle
 		newStats.SensorDetails.ElevatedAccess = shuffle.IsElevated()
 		newStats.SensorDetails.Serial = shuffle.GetProfiler()
 
+		if sensorMode.ProcessListEnabled != "false" {
+			processes, err := shuffle.ListProcesses()
+			if err == nil { 
+				newStats.SensorDetails.ProcessList = processes
+			}
+		}
+
 		if sensorMode.SoftwareListEnabled != "false" { 
 			// Check cache first before running the command
 			newStats.SensorDetails.InstalledSoftware = shuffle.ListInstalledSoftware()
@@ -2532,6 +2539,7 @@ func mainLoop() {
 	sensorMode := shuffle.SensorMode{
 		Enabled: os.Getenv("SHUFFLE_AGENT_SENSOR_MODE") == "true",
 
+		ProcessListEnabled: os.Getenv("SHUFFLE_PROCESS_LIST_ENABLED"),
 		SoftwareListEnabled: os.Getenv("SHUFFLE_SOFTWARE_LIST_ENABLED"), 
 		CodeScannerEnabled: os.Getenv("SHUFFLE_CODE_SCANNER_ENABLED"), 
 		HdEncryptedCheck: os.Getenv("SHUFFLE_HD_ENCRYPTED_CHECK"), 
@@ -2608,6 +2616,9 @@ func mainLoop() {
 		}
 
 		// Autoconfig these. They are off if set to false
+		if len(sensorMode.ProcessListEnabled) == 0 { 
+			sensorMode.ProcessListEnabled = "true"
+		} 
 		if len(sensorMode.SoftwareListEnabled) == 0 { 
 			sensorMode.SoftwareListEnabled = "true"
 		} 
