@@ -2540,18 +2540,11 @@ func mainLoop() {
 	sensorMode := shuffle.SensorMode{
 		Enabled: os.Getenv("SHUFFLE_AGENT_SENSOR_MODE") == "true",
 
-<<<<<<< HEAD
 		ProcessListEnabled: os.Getenv("SHUFFLE_PROCESS_LIST_ENABLED"),
 		SoftwareListEnabled: os.Getenv("SHUFFLE_SOFTWARE_LIST_ENABLED"), 
 		CodeScannerEnabled: os.Getenv("SHUFFLE_CODE_SCANNER_ENABLED"), 
 		HdEncryptedCheck: os.Getenv("SHUFFLE_HD_ENCRYPTED_CHECK"), 
 		ScreenlockCheck: os.Getenv("SHUFFLE_SCREENLOCK_CHECK"), 
-=======
-		SoftwareListEnabled: os.Getenv("SHUFFLE_SOFTWARE_LIST_ENABLED"),
-		CodeScannerEnabled:  os.Getenv("SHUFFLE_CODE_SCANNER_ENABLED"),
-		HdEncryptedCheck:    os.Getenv("SHUFFLE_HD_ENCRYPTED_CHECK"),
-		ScreenlockCheck:     os.Getenv("SHUFFLE_SCREENLOCK_CHECK"),
->>>>>>> 5324f1933d0a1b7ae47c86706938105600f74981
 
 		LogForwarding: os.Getenv("SHUFFLE_LOG_FORWARDING"),
 		ResponseActions: os.Getenv("SHUFFLE_RESPONSE_ACTIONS"), 
