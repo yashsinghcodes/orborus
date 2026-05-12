@@ -78,7 +78,7 @@ jobs:
 
       # === LATEST BUILD (push to main or workflow_dispatch) ===
 
-      - name: Build and push latest to ghcr.io/shuffle (primary)
+      - name: Build and push latest (primary)
         if: steps.version.outputs.build_type == 'latest' || steps.version.outputs.build_type == 'both'
         uses: docker/build-push-action@v5
         with:
@@ -89,17 +89,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ghcr.io/shuffle/shuffle-orborus:latest
-            ghcr.io/shuffle/shuffle-orborus:2.2.1
-
-      - name: Copy latest to ghcr.io/shuffle-orborus
-        if: steps.version.outputs.build_type == 'latest' || steps.version.outputs.build_type == 'both'
-        continue-on-error: true
-        run: |
-          docker buildx imagetools create \
-            --tag ghcr.io/shuffle-orborus/shuffle-orborus:latest \
-            --tag ghcr.io/shuffle-orborus/shuffle-orborus:2.2.1 \
-            ghcr.io/shuffle/shuffle-orborus:latest
+            ghcr.io/shuffle-orborus/shuffle-orborus:latest
+            ghcr.io/shuffle-orborus/shuffle-orborus:2.2.1
 
       - name: Copy latest to DockerHub
         if: steps.version.outputs.build_type == 'latest' || steps.version.outputs.build_type == 'both'
@@ -108,7 +99,7 @@ jobs:
           docker buildx imagetools create \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/shuffle-orborus:latest \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/shuffle-orborus:2.2.1 \
-            ghcr.io/shuffle/shuffle-orborus:latest
+            ghcr.io/shuffle-orborus/shuffle-orborus:latest
 
       - name: Copy latest to shuffle-orborus DockerHub
         if: steps.version.outputs.build_type == 'latest' || steps.version.outputs.build_type == 'both'
@@ -117,7 +108,7 @@ jobs:
           docker buildx imagetools create \
             --tag shuffle-orborus/shuffle-orborus:latest \
             --tag shuffle-orborus/shuffle-orborus:2.2.1 \
-            ghcr.io/shuffle/shuffle-orborus:latest
+            ghcr.io/shuffle-orborus/shuffle-orborus:latest
 
       - name: Copy latest to frikky
         if: steps.version.outputs.build_type == 'latest' || steps.version.outputs.build_type == 'both'
@@ -127,11 +118,11 @@ jobs:
             --tag frikky/shuffle-orborus:latest \
             --tag frikky/shuffle-orborus:2.2.1 \
             --tag frikky/shuffle:orborus \
-            ghcr.io/shuffle/shuffle-orborus:latest
+            ghcr.io/shuffle-orborus/shuffle-orborus:latest
 
       # === RELEASE BUILD (GitHub release or workflow_dispatch) ===
 
-      - name: Build and push release to ghcr.io/shuffle (primary)
+      - name: Build and push release (primary)
         if: steps.version.outputs.build_type == 'release' || steps.version.outputs.build_type == 'both'
         uses: docker/build-push-action@v5
         with:
@@ -142,17 +133,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ghcr.io/shuffle/shuffle-orborus:${{ steps.version.outputs.version }}
-            ghcr.io/shuffle/shuffle-orborus:${{ steps.version.outputs.stripped_version }}
-
-      - name: Copy release to ghcr.io/shuffle-orborus
-        if: steps.version.outputs.build_type == 'release' || steps.version.outputs.build_type == 'both'
-        continue-on-error: true
-        run: |
-          docker buildx imagetools create \
-            --tag ghcr.io/shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.version }} \
-            --tag ghcr.io/shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.stripped_version }} \
-            ghcr.io/shuffle/shuffle-orborus:${{ steps.version.outputs.version }}
+            ghcr.io/shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.version }}
+            ghcr.io/shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.stripped_version }}
 
       - name: Copy release to DockerHub
         if: steps.version.outputs.build_type == 'release' || steps.version.outputs.build_type == 'both'
@@ -161,7 +143,7 @@ jobs:
           docker buildx imagetools create \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/shuffle-orborus:${{ steps.version.outputs.version }} \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/shuffle-orborus:${{ steps.version.outputs.stripped_version }} \
-            ghcr.io/shuffle/shuffle-orborus:${{ steps.version.outputs.version }}
+            ghcr.io/shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.version }}
 
       - name: Copy release to shuffle-orborus DockerHub
         if: steps.version.outputs.build_type == 'release' || steps.version.outputs.build_type == 'both'
@@ -170,7 +152,7 @@ jobs:
           docker buildx imagetools create \
             --tag shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.version }} \
             --tag shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.stripped_version }} \
-            ghcr.io/shuffle/shuffle-orborus:${{ steps.version.outputs.version }}
+            ghcr.io/shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.version }}
 
       - name: Copy release to frikky
         if: steps.version.outputs.build_type == 'release' || steps.version.outputs.build_type == 'both'
@@ -179,4 +161,4 @@ jobs:
           docker buildx imagetools create \
             --tag frikky/shuffle-orborus:${{ steps.version.outputs.version }} \
             --tag frikky/shuffle-orborus:${{ steps.version.outputs.stripped_version }} \
-            ghcr.io/shuffle/shuffle-orborus:${{ steps.version.outputs.version }}
+            ghcr.io/shuffle-orborus/shuffle-orborus:${{ steps.version.outputs.version }}

@@ -106,4 +106,4 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.version }}
           files: dist/*
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
