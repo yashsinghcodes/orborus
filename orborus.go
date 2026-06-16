@@ -4379,7 +4379,8 @@ func removeFile(fileName string) error {
 	containerName := "tenzir-node"
 	srcPath := fmt.Sprintf("/var/lib/tenzir/sigma_rules/%s", fileName)
 
-	checkSrcCmd := exec.Command("docker", "exec", containerName, "sh", "-c", fmt.Sprintf("test -f %s", srcPath))
+	//checkSrcCmd := exec.Command("docker", "exec", containerName, "sh", "-c", fmt.Sprintf("test -f %s", srcPath))
+	checkSrcCmd := exec.Command("docker", "exec", containerName, "test", "-f", srcPath)
 	if err := checkSrcCmd.Run(); err != nil {
 		// If the file does not exist, simply return nil
 		if exitErr, ok := err.(*exec.ExitError); ok && exitErr.ExitCode() == 1 {
